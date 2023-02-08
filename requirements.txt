@@ -1,0 +1,3 @@
+fastapi==0.89.1
+pydantic==1.10.4
+pygrowup @ git+https://github.com/jbaldivieso/pygrowup2.git@2a5a5f76f82064d5e06c48c5edb9624cfb30b54f
