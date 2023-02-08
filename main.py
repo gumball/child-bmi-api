@@ -11,7 +11,7 @@ class BabyData(BaseModel):
     sex: str
     weight: float
     height: float
-    bmi: float = 0.0
+    bmi: float = None
 
 
 app = FastAPI()
@@ -22,13 +22,14 @@ def zptile(z_score):
 
 
 @app.post("/api/v1/bmi")
-def get_bmi_data(baby: BabyData):
+def get_bmi_calculation(baby: BabyData):
 
     age_in_days = (datetime.fromisoformat(baby.measurement_date)-datetime.fromisoformat(baby.date_of_birth)).days
 
     obs = Observation(sex=baby.sex, age_in_days=age_in_days)
 
-    baby.bmi = baby.weight / ((baby.height / 100) ** 2)
+    if baby.bmi is None:
+        baby.bmi = baby.weight / ((baby.height / 100) ** 2)
 
     measurements = {
         "length_or_height_for_age": obs.length_or_height_for_age(baby.height),
